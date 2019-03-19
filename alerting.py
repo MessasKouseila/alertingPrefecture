@@ -26,7 +26,7 @@ class Alerting:
         try:
             r = requests.post(self.__config['url'], headers=self.__config['headers'], data=self.__config['params'])
             s = self.__config['regex']
-            result = re.search(s, r.content)
+            result = re.search(s, r.content.decode('utf-8'))
             # On a trouver le message indiquant qu'il n'existe aucun rendez-vous disponible
             if result:
                 print(result.group(0))
@@ -37,7 +37,6 @@ class Alerting:
                 return True
         except:
             print("ERREUR LORS DE L'ACCESS AU SITE DE LA PREFECTURE")
-
     def alerting(self):
         while True:
             if self.do_post():
