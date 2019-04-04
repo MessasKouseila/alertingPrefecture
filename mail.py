@@ -24,7 +24,8 @@ class Mailer:
         try:
             self.__msg = MIMEMultipart()
             self.__msg['From'] = self.__config['sender_email']
-            self.__msg['To'] = mail_to
+            self.__msg['To'] = self.__config['sender_email_to'] if self.__config[
+                                                                       'sender_email_to'] is not None else mail_to
             self.__msg['Subject'] = subject
             self.__msg.attach(
                 MIMEText(self.__config['default_message'] if content_message is None else content_message))

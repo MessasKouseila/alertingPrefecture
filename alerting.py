@@ -21,9 +21,12 @@ class Alerting:
                 self.__config = data['site']
 
         self.mailer = Mailer()
+        self.number_try = 0
+        self.number_alert = 0
 
     def do_post(self):
         try:
+            self.number_try += 1
             r = requests.post(self.__config['url'], headers=self.__config['headers'], data=self.__config['params'])
             s = self.__config['regex']
             result = re.search(s, r.content.decode('utf-8'))
@@ -37,12 +40,21 @@ class Alerting:
                 return True
         except:
             print("ERREUR LORS DE L'ACCESS AU SITE DE LA PREFECTURE")
+
     def alerting(self):
         while True:
             if self.do_post():
                 self.mailer.send_mail()
+                self.add_number_alert()
+
+            print("###########    TENTATIVE NUMERO                %s     ###########" % self.number_try)
             print("###########    NOUVELLE TENTATIVE DANS %s SECONDES    ###########" % self.__config['time'])
             time.sleep(self.__config['time'])
+
+    def add_number_alert(self):
+        self.number_alert += 1
+        if self.number_alert > self.__config['max_alert'] - 1:
+            exit(0)
 
 
 if __name__ == "__main__":
