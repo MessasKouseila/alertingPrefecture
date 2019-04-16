@@ -31,20 +31,24 @@ class Alerting:
             s = self.__config['regex']
             result = re.search(s, r.content.decode('utf-8'))
             # On a trouver le message indiquant qu'il n'existe aucun rendez-vous disponible
-            if result:
+            if result is not None:
                 print(result.group(0))
+                print("###########    UN RENDEZ-VOUS DISPONIBLE    ###########")
+                f = open("logAlerte/alerte_" + str(self.number_alert) + ".html", "w+")
+                f.write(r.content.decode('utf-8'))
+                f.close()
+                return True
+            else:
                 print("###########    AUCUN RENDEZ-VOUS DISPONIBLE    ###########")
                 return False
-            else:
-                print("###########    UN RENDEZ-VOUS DISPONIBLE    ###########")
-                return True
         except:
             print("ERREUR LORS DE L'ACCESS AU SITE DE LA PREFECTURE")
+            raise
 
     def alerting(self):
         while True:
             if self.do_post():
-                self.mailer.send_mail()
+                self.mailer.send_mail("logAlerte/alerte_" + str(self.number_alert) + ".html")
                 self.add_number_alert()
 
             print("###########    TENTATIVE NUMERO                %s     ###########" % self.number_try)
