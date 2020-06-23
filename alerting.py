@@ -24,22 +24,24 @@ class Alerting:
         self.number_try = 0
         self.number_alert = 0
 
-    def do_post(self):
+    def do_post(self, param):
         try:
             self.number_try += 1
-            r = requests.post(self.__config['url'], headers=self.__config['headers'], data=self.__config['params'])
+            r = requests.post(self.__config['url'], headers=self.__config['headers'], data=self.__config['nextButton'])
+            time.sleep(2)
+            r = requests.post(self.__config['url'], headers=self.__config['headers'], data=self.__config[param])
             s = self.__config['regex']
             result = re.search(s, r.content.decode('utf-8'))
             # On a trouver le message indiquant qu'il n'existe aucun rendez-vous disponible
             if result is not None:
                 print(result.group(0))
-                print("###########    UN RENDEZ-VOUS DISPONIBLE    ###########")
+                print("###########    UN RENDEZ-VOUS DISPONIBLE POUR ", param, "       ###########")
                 f = open("logAlerte/alerte_" + str(self.number_alert) + ".html", "w+")
                 f.write(r.content.decode('utf-8'))
                 f.close()
                 return True
             else:
-                print("###########    AUCUN RENDEZ-VOUS DISPONIBLE    ###########")
+                print("###########    AUCUN RENDEZ-VOUS DISPONIBLE POUR ", param, "    ###########")
                 return False
         except:
             print("ERREUR LORS DE L'ACCESS AU SITE DE LA PREFECTURE")
@@ -47,10 +49,12 @@ class Alerting:
 
     def alerting(self):
         while True:
-            if self.do_post():
+            if self.do_post('juin'):
                 self.mailer.send_mail("logAlerte/alerte_" + str(self.number_alert) + ".html")
                 self.add_number_alert()
-
+            if self.do_post('juillet'):
+                self.mailer.send_mail("logAlerte/alerte_" + str(self.number_alert) + ".html")
+                self.add_number_alert()
             print("###########    TENTATIVE NUMERO                %s     ###########" % self.number_try)
             print("###########    NOUVELLE TENTATIVE DANS %s SECONDES    ###########" % self.__config['time'])
             time.sleep(self.__config['time'])
