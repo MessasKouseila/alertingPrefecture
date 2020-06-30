@@ -6,6 +6,7 @@ import json
 import re
 import time
 import requests
+import random
 from mail import Mailer
 
 
@@ -45,9 +46,10 @@ class Alerting:
                 return False
         except:
             print("ERREUR LORS DE L'ACCESS AU SITE DE LA PREFECTURE")
-            raise
+            time.sleep(300)
 
     def alerting(self):
+        sleepTime = 10
         while True:
             if self.do_post('juin'):
                 self.mailer.send_mail("logAlerte/alerte_" + str(self.number_alert) + ".html")
@@ -56,8 +58,8 @@ class Alerting:
                 self.mailer.send_mail("logAlerte/alerte_" + str(self.number_alert) + ".html")
                 self.add_number_alert()
             print("###########    TENTATIVE NUMERO                %s     ###########" % self.number_try)
-            print("###########    NOUVELLE TENTATIVE DANS %s SECONDES    ###########" % self.__config['time'])
-            time.sleep(self.__config['time'])
+            print("###########    NOUVELLE TENTATIVE DANS %s SECONDES    ###########" % sleepTime)
+            time.sleep(sleepTime)
 
     def add_number_alert(self):
         self.number_alert += 1

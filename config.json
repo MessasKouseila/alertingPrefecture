@@ -26,6 +26,6 @@
     },
     "regex": "Description de la nature du rendez-vous",
     "time": 30,
-    "max_alert": 50
+    "max_alert": 5
   }
 }
