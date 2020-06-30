@@ -5,10 +5,10 @@
     "sender_email": "kouseila1994@gmail.com",
     "sender_email_to": "messas.kous@gmail.com",
     "password": "",
-    "default_message": "http://www.seine-saint-denis.gouv.fr/booking/create/9846/0"
+    "default_message": "http://www.seine-saint-denis.gouv.fr/booking/create/1194/0"
   },
   "site": {
-    "url": "http://www.seine-saint-denis.gouv.fr/booking/create/9846/0",
+    "url": "http://www.seine-saint-denis.gouv.fr/booking/create/1194/0",
     "headers": {
       "user-agent": "my-app/0.0.1"
     },
@@ -16,16 +16,8 @@
       "condition": "on",
       "nextButton": "Effectuer+une+demande+de+rendez-vous"
     },
-    "juin": {
-      "planning": "16035",
-      "nextButton": "Etape+suivante"
-    },
-    "juillet": {
-      "planning": "16036",
-      "nextButton": "Etape+suivante"
-    },
     "regex": "Description de la nature du rendez-vous",
-    "time": 30,
+    "time": 60,
     "max_alert": 5
   }
 }
