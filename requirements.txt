@@ -1,0 +1,5 @@
+Unidecode==1.0.22
+urllib3==1.25.9
+requests==2.24.0
+beautifulsoup4==4.9.1
+httplib2==0.9.2

@@ -11,7 +11,6 @@ from mail import Mailer
 
 
 class Alerting:
-
     def __init__(self, config=None):
         """ Initialisation de la configuration de l'alerting"""
 
@@ -28,16 +27,18 @@ class Alerting:
     def do_post(self):
         try:
             self.number_try += 1
-            r = requests.post(self.__config['url'], headers=self.__config['headers'], data=self.__config['nextButton'])
+            r = requests.post(self.__config['url'],
+                              headers=self.__config['headers'],
+                              data=self.__config['nextButton'])
             s = self.__config['regex']
             result = re.search(s, r.content.decode('utf-8'))
             # On a trouver le message indiquant qu'il n'existe aucun rendez-vous disponible
             if result is not None:
-                print(result.group(0))
                 print("###########    UN RENDEZ-VOUS DISPONIBLE ###########")
                 return True
             else:
-                print("###########    AUCUN RENDEZ-VOUS DISPONIBLE ###########")
+                print(
+                    "###########    AUCUN RENDEZ-VOUS DISPONIBLE ###########")
                 return False
         except:
             print("ERREUR LORS DE L'ACCESS AU SITE DE LA PREFECTURE")
@@ -50,8 +51,12 @@ class Alerting:
                 self.mailer.send_mail()
                 self.add_number_alert()
             sleepTime = self.__config['time'] + random.randrange(30, 60)
-            print("###########    TENTATIVE NUMERO                %s     ###########" % self.number_try)
-            print("###########    NOUVELLE TENTATIVE DANS %s SECONDES    ###########" % sleepTime)
+            print(
+                "###########    TENTATIVE NUMERO                %s     ###########"
+                % self.number_try)
+            print(
+                "###########    NOUVELLE TENTATIVE DANS %s SECONDES    ###########"
+                % sleepTime)
             time.sleep(sleepTime)
 
     def add_number_alert(self):

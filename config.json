@@ -3,12 +3,12 @@
     "port": 587,
     "smtp_server": "smtp.gmail.com",
     "sender_email": "kouseila1994@gmail.com",
-    "sender_email_to": "messas.kous@gmail.com",
-    "password": "",
-    "default_message": "http://www.seine-saint-denis.gouv.fr/booking/create/1194/0"
+    "receiver_email": "messas.kous@gmail.com",
+    "password": "sender-email",
+    "default_message": "https://www.hauts-de-seine.gouv.fr/booking/create/13525/0"
   },
   "site": {
-    "url": "http://www.seine-saint-denis.gouv.fr/booking/create/1194/0",
+    "url": "https://www.hauts-de-seine.gouv.fr/booking/create/13525/0",
     "headers": {
       "user-agent": "my-app/0.0.1"
     },
